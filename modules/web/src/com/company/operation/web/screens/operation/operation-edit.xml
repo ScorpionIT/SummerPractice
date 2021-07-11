@@ -18,12 +18,12 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="operationDc">
             <column width="350px">
-                <textField id="typeField" property="type"/>
+                <lookupField id="typeField" property="type"/>
                 <textField id="amountField" property="amount"/>
                 <dateField id="dataField" property="data"/>
                 <textField id="categoryField" property="category"/>
                 <textField id="commentaryField" property="commentary"/>
-                <lookupPickerField id="accountField" property="account" required="true" />
+                <pickerField id="accountField" property="account" required="true" />
             </column>
         </form>
         <hbox id="editActions" spacing="true">

@@ -9,7 +9,7 @@ create table OPERATION_OPERATION (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    TYPE_ varchar(255) not null,
+    TYPE_ integer not null,
     AMOUNT decimal(19, 2) not null,
     DATA_ timestamp not null,
     CATEGORY varchar(255),

@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 
 @Table(name = "OPERATION_OPERATION")
 @Entity(name = "operation_Operation")
-@NamePattern("%s|data")
+@NamePattern("%s %s|type,category")
 public class Operation extends StandardEntity {
     private static final long serialVersionUID = 8645215951665096997L;
 
-    @NotNull
     @Column(name = "TYPE_", nullable = false)
-    private String type;
+    @NotNull
+    private Integer type;
 
     @Column(name = "AMOUNT", nullable = false)
     @NotNull
@@ -37,6 +37,14 @@ public class Operation extends StandardEntity {
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
+    public void setType(OperationType type) {
+        this.type = type == null ? null : type.getId();
+    }
+
+    public OperationType getType() {
+        return type == null ? null : OperationType.fromId(type);
+    }
+
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
@@ -51,14 +59,6 @@ public class Operation extends StandardEntity {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public String getCommentary() {
