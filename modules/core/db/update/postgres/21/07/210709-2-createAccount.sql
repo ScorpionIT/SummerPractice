@@ -1,0 +1,1 @@
+create unique index IDX_OPERATION_ACCOUNT_UK_ACC_NAME on OPERATION_ACCOUNT (ACC_NAME) where DELETE_TS is null ;

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
+    <menu id="application-operation" insertBefore="administration" caption="mainMsg://menu_config.application-operation">
+        <item screen="operation_Account.browse" caption="mainMsg://menu_config.operation_Account.browse"/>
+        <item screen="operation_Operation.browse" caption="mainMsg://menu_config.operation_Operation.browse"/>
+    </menu>
+</menu-config>

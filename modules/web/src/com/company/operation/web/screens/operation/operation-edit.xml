@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://operationEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.operation.web.screens.operation">
+    <data>
+        <instance id="operationDc"
+                  class="com.company.operation.entity.Operation">
+            <view extends="_local">
+                <property name="account" view="_minimal" />
+            </view>
+
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="operationDc">
+            <column width="350px">
+                <textField id="typeField" property="type"/>
+                <textField id="amountField" property="amount"/>
+                <dateField id="dataField" property="data"/>
+                <textField id="categoryField" property="category"/>
+                <textField id="commentaryField" property="commentary"/>
+                <lookupPickerField id="accountField" property="account" required="true" />
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>
