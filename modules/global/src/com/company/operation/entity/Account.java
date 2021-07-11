@@ -50,5 +50,5 @@ public class Account extends StandardEntity {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
-
+    // Привет я подсяду?
 }
