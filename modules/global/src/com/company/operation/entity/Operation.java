@@ -37,6 +37,14 @@ public class Operation extends StandardEntity {
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
+    public void setCategory(OperationCategory category) {
+        this.category = category == null ? null : category.getId();
+    }
+
+    public OperationCategory getCategory() {
+        return category == null ? null : OperationCategory.fromId(category);
+    }
+
     public void setType(OperationType type) {
         this.type = type == null ? null : type.getId();
     }
@@ -67,14 +75,6 @@ public class Operation extends StandardEntity {
 
     public void setCommentary(String commentary) {
         this.commentary = commentary;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public LocalDateTime getData() {

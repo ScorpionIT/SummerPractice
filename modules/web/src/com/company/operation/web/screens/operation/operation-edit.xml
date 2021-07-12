@@ -21,7 +21,7 @@
                 <lookupField id="typeField" property="type"/>
                 <textField id="amountField" property="amount"/>
                 <dateField id="dataField" property="data"/>
-                <textField id="categoryField" property="category"/>
+                <lookupField id="categoryField" property="category"/>
                 <textField id="commentaryField" property="commentary"/>
                 <pickerField id="accountField" property="account" required="true" />
             </column>
