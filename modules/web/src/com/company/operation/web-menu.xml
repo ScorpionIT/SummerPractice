@@ -3,5 +3,7 @@
     <menu id="application-operation" insertBefore="administration" caption="mainMsg://menu_config.application-operation">
         <item screen="operation_Account.browse" caption="mainMsg://menu_config.operation_Account.browse"/>
         <item screen="operation_Operation.browse" caption="mainMsg://menu_config.operation_Operation.browse"/>
+        <item screen="operation_Operation-spendings.browse"
+              caption="mainMsg://menu_config.operation_Operation-spendings.browse"/>
     </menu>
 </menu-config>

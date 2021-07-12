@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
 
+    <view entity="operation_Operation" name="operation-browse-spendingView">
+        <property name="type"/>
+        <property name="amount"/>
+        <property name="category"/>
+    </view>
 </views>

@@ -12,7 +12,7 @@ create table OPERATION_OPERATION (
     TYPE_ integer not null,
     AMOUNT decimal(19, 2) not null,
     DATA_ timestamp not null,
-    CATEGORY varchar(255),
+    CATEGORY varchar(50),
     COMMENTARY varchar(255),
     ACCOUNT_ID uuid not null,
     --

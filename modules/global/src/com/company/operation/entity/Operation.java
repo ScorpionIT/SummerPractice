@@ -2,6 +2,8 @@ package com.company.operation.entity;
 
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,7 +25,7 @@ public class Operation extends StandardEntity {
     private BigDecimal amount;
 
     @NotNull
-    @Column(name = "DATA_", nullable = false, unique = true)
+    @Column(name = "DATA_", nullable = false)
     private LocalDateTime data;
 
     @Column(name = "CATEGORY")
@@ -35,6 +37,7 @@ public class Operation extends StandardEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ACCOUNT_ID")
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Account account;
 
     public void setCategory(OperationCategory category) {
