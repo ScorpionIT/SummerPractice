@@ -18,16 +18,16 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="operationDc">
             <column width="350px">
-                <lookupField id="typeField" property="type"/>
-                <textField id="amountField" property="amount"/>
-                <dateField id="dataField" property="data"/>
-                <lookupField id="categoryField" property="category"/>
-                <textField id="commentaryField" property="commentary"/>
+                <lookupField id="typeField" property="type" enable="false"/>
+                <textField id="amountField" property="amount" enable="false"/>
+                <dateField id="dataField" property="data" enable="false"/>
+                <lookupField id="categoryField" property="category" enable="false"/>
+                <textField id="commentaryField" property="commentary" enable="false"/>
                 <pickerField id="accountField" property="account" required="true" />
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="commitAndCloseBtn" action="windowCommitAndClose" enable="false"/>
             <button id="closeBtn" action="windowClose"/>
         </hbox>
     </layout>

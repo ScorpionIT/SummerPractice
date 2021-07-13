@@ -3,6 +3,7 @@ package com.company.operation.entity;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@PublishEntityChangedEvents
 @Table(name = "OPERATION_OPERATION")
 @Entity(name = "operation_Operation")
 @NamePattern("%s %s|type,category")
@@ -28,7 +30,8 @@ public class Operation extends StandardEntity {
     @Column(name = "DATA_", nullable = false)
     private LocalDateTime data;
 
-    @Column(name = "CATEGORY")
+    @Column(name = "CATEGORY", nullable = false)
+    @NotNull
     private String category;
 
     @Column(name = "COMMENTARY")
@@ -39,6 +42,26 @@ public class Operation extends StandardEntity {
     @JoinColumn(name = "ACCOUNT_ID")
     @OnDeleteInverse(DeletePolicy.CASCADE)
     private Account account;
+
+    public Operation(@NotNull Integer type, @NotNull BigDecimal amount, @NotNull LocalDateTime data,@NotNull String category, @NotNull Account account) {
+        if (type.equals(OperationType.ADD.getId())){ //Если добавляем
+            account.setFunds(account.getFunds().add(amount));
+        } else if (account.getFunds().compareTo(amount) >= 1){ // Если >= 1 то средст либо больше либо ровно сколько вычитается
+            account.setFunds(account.getFunds().subtract(amount));
+        } else { // < 1 - средств на аккаунте не достаточно для вычитания
+            return;
+        }
+        this.type = type;
+        this.amount = amount;
+        this.data = data;
+        this.category=category;
+        this.account = account;
+    }
+
+
+
+    public Operation() {
+    }
 
     public void setCategory(OperationCategory category) {
         this.category = category == null ? null : category.getId();
