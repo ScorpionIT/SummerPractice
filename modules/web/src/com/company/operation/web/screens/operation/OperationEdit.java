@@ -5,7 +5,6 @@ import com.company.operation.entity.OperationCategory;
 import com.company.operation.entity.OperationType;
 import com.company.operation.service.AmountService;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.operation.entity.Operation;
@@ -13,6 +12,7 @@ import com.company.operation.entity.Operation;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @UiController("operation_Operation.edit")
 @UiDescriptor("operation-edit.xml")
@@ -34,28 +34,26 @@ public class OperationEdit extends StandardEditor<Operation> {
     @Inject
     private DataManager dataManager;
     @Inject
-    private Notifications notifications;
-    @Inject
     private Button commitAndCloseBtn;
     @Inject
     private AmountService amountService;
 
     @Subscribe("commitAndCloseBtn")
-    public void onCommitAndCloseBtnClick(Button.ClickEvent event) throws Exception{
-        Account acc = dataManager.load(Account.class).id(accountField.getValue().getId()).one();
+    public void onCommitAndCloseBtnClick(Button.ClickEvent event){
+        Account acc = dataManager.load(Account.class).id(Objects.requireNonNull(accountField.getValue()).getId()).one();
 
-        if(typeField.getValue().equals(OperationType.ADD)){
+        if(Objects.equals(typeField.getValue(), OperationType.ADD)){
             acc.setFunds(acc.getFunds().add(amountField.getValue()));
-        } else if (acc.getFunds().compareTo(amountField.getValue() )>=1){
+        } else if (acc.getFunds().compareTo(amountField.getValue() )> 0){
             acc.setFunds(acc.getFunds().subtract(amountField.getValue()));
-        }
+        } else acc.setFunds(new BigDecimal("0.0"));
 
         dataManager.commit(acc);
     }
 
     @Subscribe("amountField")
     public void onAmountFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        commitAndCloseBtn.setEnabled(amountService.canAmountFieldBeFree(dataManager.load(Account.class).id(accountField.getValue().getId()).one(),amountField.getValue()));
+        commitAndCloseBtn.setEnabled(amountService.canAmountFieldBeFree(dataManager.load(Account.class).id(Objects.requireNonNull(Objects.requireNonNull(accountField.getValue())).getId()).one(),amountField.getValue()));
     }
 
     @Subscribe("accountField")

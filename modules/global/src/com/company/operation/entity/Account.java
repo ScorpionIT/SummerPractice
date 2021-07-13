@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Table(name = "OPERATION_ACCOUNT")
@@ -17,6 +18,7 @@ public class Account extends StandardEntity {
 
     @Column(name = "ACC_NAME", nullable = false, unique = true, length = 20)
     @NotNull
+    @Size(min = 20, max = 20)
     private String accName;
 
     @Column(name = "CURRENCY")

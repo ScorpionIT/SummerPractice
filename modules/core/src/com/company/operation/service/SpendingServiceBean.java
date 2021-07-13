@@ -4,12 +4,10 @@ import com.company.operation.entity.Operation;
 import com.company.operation.entity.OperationCategory;
 import com.company.operation.entity.OperationType;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.FluentLoader;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -34,8 +32,8 @@ public class SpendingServiceBean implements SpendingService {
                 .parameter("dateEnd", dateEnd)
                 .list();
         BigDecimal res = new BigDecimal(0);
-        for (int i=0; i <operationList.size();i++){
-            res = res.add(operationList.get(i).getAmount());
+        for (Operation operation : operationList) {
+            res = res.add(operation.getAmount());
         }
         return res;
     }
