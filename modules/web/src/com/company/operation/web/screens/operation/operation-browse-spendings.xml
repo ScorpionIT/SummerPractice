@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://operationBrowse.caption"
+        caption="msg://operationBrowseSpendings.caption"
         focusComponent="operationsTable"
         messagesPack="com.company.operation.web.screens.operation">
     <data readOnly="true">
         <collection id="operationsDc"
-                    class="com.company.operation.entity.Operation">
-            <view extends="_local"/>
+                    class="com.company.operation.entity.Operation"
+                    view="operation-browse-spendingView">
             <loader id="operationsDl">
                 <query>
                     <![CDATA[select e from operation_Operation e]]>
@@ -31,13 +31,12 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="spendings" caption="Подсчет трат по категории"/>
             </actions>
             <columns>
                 <column id="type"/>
                 <column id="amount"/>
-                <column id="data"/>
                 <column id="category"/>
-                <column id="commentary"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
@@ -45,6 +44,11 @@
                 <button id="createBtn" action="operationsTable.create"/>
                 <button id="editBtn" action="operationsTable.edit"/>
                 <button id="removeBtn" action="operationsTable.remove"/>
+                <dateField id="startDate" property="data"/>
+                <dateField id="endDate" property="data"/>
+                <lookupField dataContainer="operationsDc" id="categoryField" property="category"/>
+                <button id="spendingsBtn" action="operationsTable.spendings"/>
+                <currencyField id="spendingsResult" editable="false"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

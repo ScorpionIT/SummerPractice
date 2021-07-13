@@ -13,13 +13,4 @@ import java.math.BigDecimal;
 @LookupComponent("operationsTable")
 @LoadDataBeforeShow
 public class OperationBrowse extends StandardLookup<Operation> {
-    @Subscribe("operationsTable")
-    public void onOperationsTableSelection(Table.SelectionEvent<Operation> event) {
-
-    }
-
-    @Subscribe("spendingsBtn")
-    public void onSpendingsButtonClick(Button.ClickEvent event){
-        
-    }
 }
