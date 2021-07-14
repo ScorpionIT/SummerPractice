@@ -13,6 +13,8 @@
             <map>
                 <entry key="operation_SpendingService" value="com.company.operation.service.SpendingService"/>
                 <entry key="operation_AmountService" value="com.company.operation.service.AmountService"/>
+                <entry key="operation_AccountApproveService"
+                       value="com.company.operation.service.AccountApproveService"/>
             </map>
         </property>
     </bean>

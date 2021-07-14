@@ -3,6 +3,7 @@ package com.company.operation.web.screens.operation;
 import com.company.operation.entity.Account;
 import com.company.operation.entity.OperationCategory;
 import com.company.operation.entity.OperationType;
+import com.company.operation.service.AccountApproveService;
 import com.company.operation.service.AmountService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.*;
@@ -37,18 +38,12 @@ public class OperationEdit extends StandardEditor<Operation> {
     private Button commitAndCloseBtn;
     @Inject
     private AmountService amountService;
+    @Inject
+    private AccountApproveService accountApproveService;
 
     @Subscribe("commitAndCloseBtn")
     public void onCommitAndCloseBtnClick(Button.ClickEvent event){
-        Account acc = dataManager.load(Account.class).id(Objects.requireNonNull(accountField.getValue()).getId()).one();
-
-        if(Objects.equals(typeField.getValue(), OperationType.ADD)){
-            acc.setFunds(acc.getFunds().add(amountField.getValue()));
-        } else if (acc.getFunds().compareTo(amountField.getValue() )> 0){
-            acc.setFunds(acc.getFunds().subtract(amountField.getValue()));
-        } else acc.setFunds(new BigDecimal("0.0"));
-
-        dataManager.commit(acc);
+        dataManager.commit(accountApproveService.accountApprove(dataManager.load(Account.class).id(Objects.requireNonNull(accountField.getValue()).getId()).one(),amountField.getValue(),typeField.getValue()));
     }
 
     @Subscribe("amountField")
