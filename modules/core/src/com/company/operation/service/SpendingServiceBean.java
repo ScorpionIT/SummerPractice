@@ -19,7 +19,6 @@ public class SpendingServiceBean implements SpendingService {
 
     @Override
     public BigDecimal allSpendingByDate(OperationCategory category, Date dateStart, Date dateEnd) {
-        //OperationCategory food = OperationCategory.FOOD;
         OperationType reduce = OperationType.REDUCE;
         List<Operation> operationList = dataManager.load(Operation.class)
                 .query("select e from operation_Operation e where " +
