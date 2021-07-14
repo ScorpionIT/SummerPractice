@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Table(name = "OPERATION_ACCOUNT")
@@ -16,9 +15,8 @@ import java.math.BigDecimal;
 public class Account extends StandardEntity {
     private static final long serialVersionUID = 338492386569364700L;
 
-    @Column(name = "ACC_NAME", nullable = false, unique = true, length = 20)
+    @Column(name = "ACC_NAME", nullable = false, unique = true)
     @NotNull
-    @Size(min = 20, max = 20)
     private String accName;
 
     @Column(name = "CURRENCY")
@@ -29,20 +27,20 @@ public class Account extends StandardEntity {
     @NotNull
     private BigDecimal funds;
 
-    public void setFunds(BigDecimal funds) {
-        this.funds = funds;
-    }
-
-    public BigDecimal getFunds() {
-        return funds;
-    }
-
     public void setAccName(String accName) {
         this.accName = accName;
     }
 
     public String getAccName() {
         return accName;
+    }
+
+    public void setFunds(BigDecimal funds) {
+        this.funds = funds;
+    }
+
+    public BigDecimal getFunds() {
+        return funds;
     }
 
     public String getCurrency() {

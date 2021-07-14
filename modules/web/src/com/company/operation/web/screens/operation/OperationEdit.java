@@ -21,44 +21,36 @@ import java.util.Objects;
 @LoadDataBeforeShow
 public class OperationEdit extends StandardEditor<Operation> {
     @Inject
-    private LookupField<OperationCategory> categoryField;
-    @Inject
     private PickerField<Account> accountField;
     @Inject
     private TextField<BigDecimal> amountField;
-    @Inject
-    private TextField<String> commentaryField;
-    @Inject
-    private DateField<LocalDateTime> dataField;
     @Inject
     private LookupField<OperationType> typeField;
     @Inject
     private DataManager dataManager;
     @Inject
-    private Button commitAndCloseBtn;
-    @Inject
     private AmountService amountService;
     @Inject
     private AccountApproveService accountApproveService;
+    @Inject
+    private DateField<LocalDateTime> dataField;
+    @Inject
+    private LookupField<OperationCategory> categoryField;
+
+    @Override
+    protected void validateAdditionalRules(ValidationErrors errors){
+        Operation e = getEditedEntity();
+        if(!(e.getAccount() == null || e.getAmount() == null || e.getType() == null))
+            if(!amountService.canAmountFieldBeFree(e.getAccount(),e.getAmount(),e.getType()))
+                errors.add("Сумма списания не может быть больше средств на счете!");
+
+        super.validateAdditionalRules(errors);
+    }
 
     @Subscribe("commitAndCloseBtn")
-    public void onCommitAndCloseBtnClick(Button.ClickEvent event){
-        dataManager.commit(accountApproveService.accountApprove(dataManager.load(Account.class).id(Objects.requireNonNull(accountField.getValue()).getId()).one(),amountField.getValue(),typeField.getValue()));
+    public void onCommitAndCloseBtnClick(Button.ClickEvent event) {
+        if(accountField.getValue() != null && typeField.getValue() != null && amountField.getValue() != null && dataField.getValue() != null && categoryField.getValue() != null) {
+            dataManager.commit(accountApproveService.accountApprove(dataManager.load(Account.class).id(Objects.requireNonNull(accountField.getValue()).getId()).one(), amountField.getValue(), typeField.getValue()));
+        }
     }
-
-    @Subscribe("amountField")
-    public void onAmountFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        commitAndCloseBtn.setEnabled(amountService.canAmountFieldBeFree(dataManager.load(Account.class).id(Objects.requireNonNull(Objects.requireNonNull(accountField.getValue())).getId()).one(),amountField.getValue()));
-    }
-
-    @Subscribe("accountField")
-    public void onAccountFieldValueChange(HasValue.ValueChangeEvent<Account> event) {
-        typeField.setEnabled(true);
-        amountField.setEnabled(true);
-        dataField.setEnabled(true);
-        categoryField.setEnabled(true);
-        commentaryField.setEnabled(true);
-        commitAndCloseBtn.setEnabled(false);
-    }
-
 }

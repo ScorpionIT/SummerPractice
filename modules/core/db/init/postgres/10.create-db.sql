@@ -30,7 +30,7 @@ create table OPERATION_ACCOUNT (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    ACC_NAME varchar(20) not null,
+    ACC_NAME varchar(255) not null,
     CURRENCY varchar(255),
     FUNDS decimal(19, 2),
     --

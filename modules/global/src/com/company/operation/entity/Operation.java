@@ -43,26 +43,6 @@ public class Operation extends StandardEntity {
     @OnDeleteInverse(DeletePolicy.CASCADE)
     private Account account;
 
-    public Operation(@NotNull Integer type, @NotNull BigDecimal amount, @NotNull LocalDateTime data,@NotNull String category, @NotNull Account account) {
-        if (type.equals(OperationType.ADD.getId())){ //Если добавляем
-            account.setFunds(account.getFunds().add(amount));
-        } else if (account.getFunds().compareTo(amount) >= 1){ // Если >= 1 то средст либо больше либо ровно сколько вычитается
-            account.setFunds(account.getFunds().subtract(amount));
-        } else { // < 1 - средств на аккаунте не достаточно для вычитания
-            return;
-        }
-        this.type = type;
-        this.amount = amount;
-        this.data = data;
-        this.category=category;
-        this.account = account;
-    }
-
-
-
-    public Operation() {
-    }
-
     public void setCategory(OperationCategory category) {
         this.category = category == null ? null : category.getId();
     }

@@ -1,6 +1,7 @@
 package com.company.operation.service;
 
 import com.company.operation.entity.Account;
+import com.company.operation.entity.OperationType;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -9,8 +10,11 @@ import java.math.BigDecimal;
 public class AmountServiceBean implements AmountService {
 
     @Override
-    public boolean canAmountFieldBeFree(Account acc, BigDecimal amount) {
-        BigDecimal fund = acc.getFunds();
-        return !(amount.compareTo(fund) > 0);
+    public boolean canAmountFieldBeFree(Account acc, BigDecimal amount, OperationType operationType) {
+
+        if(operationType == OperationType.REDUCE)
+            return !(amount.compareTo(acc.getFunds()) > 0);
+
+        return true;
     }
 }
