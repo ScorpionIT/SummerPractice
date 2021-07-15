@@ -59,15 +59,6 @@ public class OperationEdit extends StandardEditor<Operation> {
 
         }
 
-        if (!entityStates.isNew(e)) {
-            typeField.setEnabled(false);
-            amountField.setEnabled(false);
-            errors.add("Нельзя редактировать тип и сумму операции после создания!");
-        } else {
-            typeField.setEnabled(true);
-            amountField.setEnabled(true);
-        }
-
         super.validateAdditionalRules(errors);
     }
 
