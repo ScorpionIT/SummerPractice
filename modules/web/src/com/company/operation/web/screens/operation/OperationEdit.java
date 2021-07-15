@@ -7,6 +7,7 @@ import com.company.operation.service.AccountApproveService;
 import com.company.operation.service.AmountService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.EntityStates;
+import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.screen.*;
@@ -62,7 +63,7 @@ public class OperationEdit extends StandardEditor<Operation> {
             typeField.setEnabled(false);
             amountField.setEnabled(false);
             errors.add("Нельзя редактировать тип и сумму операции после создания!");
-        } else{
+        } else {
             typeField.setEnabled(true);
             amountField.setEnabled(true);
         }
@@ -73,15 +74,29 @@ public class OperationEdit extends StandardEditor<Operation> {
     @Subscribe("commitAndCloseBtn")
     public void onCommitAndCloseBtnClick(Button.ClickEvent event) {
 
-        if (accountField.getValue() != null && typeField.getValue() != null && amountField.getValue() != null && dataField.getValue() != null && categoryField.getValue() != null && !entityStates.isNew(getEditedEntity())) {
-            dataManager.commit(accountApproveService.accountApprove(dataManager.load(Account.class).id(Objects.requireNonNull(accountField.getValue()).getId()).one(), amountField.getValue(), typeField.getValue()));
+        if (accountField.getValue() != null
+                && typeField.getValue() != null
+                && amountField.getValue() != null
+                && dataField.getValue() != null
+                && categoryField.getValue() != null
+                && !entityStates.isNew(getEditedEntity())) {
+
+            View view = new View(Account.class);
+            dataManager.commit(
+                    accountApproveService.accountApprove(
+                            dataManager.load(Account.class)//view
+                                    .id(Objects.requireNonNull(accountField.getValue()).getId())
+                                    .view(view)
+                                    .one(),
+                            amountField.getValue(),
+                            typeField.getValue()));
         }
 
     }
 
     @Subscribe("typeField")
     public void onTypeFieldValueChange(HasValue.ValueChangeEvent<OperationType> event) {
-        if(!entityStates.isNew(getEditedEntity())){
+        if (!entityStates.isNew(getEditedEntity())) {
             notifications.create().withCaption("Нельзя редактировать операцию!").show();
             typeField.setEnabled(false);
             amountField.setEnabled(false);

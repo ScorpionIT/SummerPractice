@@ -4,6 +4,7 @@ import com.company.operation.entity.Operation;
 import com.company.operation.entity.OperationCategory;
 import com.company.operation.entity.OperationType;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -21,6 +22,8 @@ public class SpendingServiceBean implements SpendingService {
     public BigDecimal allSpendingByDate(OperationCategory category, Date dateStart, Date dateEnd) {
         //Сделал вашим примером, не работал корректно
         // Оставил как есть
+        View view = new View(Operation.class)
+                .addProperty("amount");
         List<Operation> operationList = dataManager.load(Operation.class)
                 .query("select e from operation_Operation e where " +
                         "(e.data between :dateStart and :dateEnd) " +
@@ -30,6 +33,7 @@ public class SpendingServiceBean implements SpendingService {
                 .parameter("category", category)
                 .parameter("dateStart", dateStart)
                 .parameter("dateEnd", dateEnd)
+                .view(view)
                 .list();
         BigDecimal res = new BigDecimal(0);
         for (Operation operation : operationList) {
