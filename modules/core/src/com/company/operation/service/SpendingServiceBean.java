@@ -20,8 +20,7 @@ public class SpendingServiceBean implements SpendingService {
 
     @Override
     public BigDecimal allSpendingByDate(OperationCategory category, Date dateStart, Date dateEnd) {
-        //Сделал вашим примером, не работал корректно
-        // Оставил как есть
+        /*
         View view = new View(Operation.class)
                 .addProperty("amount");
         List<Operation> operationList = dataManager.load(Operation.class)
@@ -39,6 +38,21 @@ public class SpendingServiceBean implements SpendingService {
         for (Operation operation : operationList) {
             res = res.add(operation.getAmount());
         }
-        return res;
+        return res;*/
+        return dataManager.load(Operation.class)
+                .query("select e from operation_Operation e where " +
+                        "(e.data between :dateStart and :dateEnd) " +
+                        "and e.type = :reduce " +
+                        "and e.category = :category")
+                .parameter("reduce", OperationType.REDUCE)
+                .parameter("category", category)
+                .parameter("dateStart", dateStart)
+                .parameter("dateEnd", dateEnd)
+                .view(new View(Operation.class).addProperty("amount"))
+                .list()
+                .stream()
+                .map(Operation::getAmount)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
     }
 }
