@@ -12,8 +12,9 @@ public class AmountServiceBean implements AmountService {
     @Override
     public boolean canAmountFieldBeFree(Account acc, BigDecimal amount, OperationType operationType) {
 
-        if(operationType == OperationType.REDUCE)
+        if (operationType == OperationType.REDUCE) {
             return !(amount.compareTo(acc.getFunds()) > 0);
+        }
 
         return true;
     }

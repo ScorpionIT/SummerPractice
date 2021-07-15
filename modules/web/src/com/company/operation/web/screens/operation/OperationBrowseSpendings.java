@@ -30,9 +30,11 @@ public class OperationBrowseSpendings extends StandardLookup<Operation> {
     private SpendingService spendingService;
 
     @Subscribe("spendingsBtn")
-    public void onSpendingsButtonClick(Button.ClickEvent event){
+    public void onSpendingsButtonClick(Button.ClickEvent event) {
         BigDecimal res = spendingService.allSpendingByDate(categoryField.getValue(), startDate.getValue(), endDate.getValue());
-        if (res == null) spendingsResult.setValue(null);
+        if (res == null) {
+            spendingsResult.setValue(null);
+        }
         spendingsResult.setValue(res);
     }
 }

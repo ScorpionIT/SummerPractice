@@ -26,7 +26,8 @@
         </filter>
         <groupTable id="operationsTable"
                     width="100%"
-                    dataContainer="operationsDc">
+                    dataContainer="operationsDc"
+                    editable="false">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>

@@ -19,14 +19,15 @@ public class SpendingServiceBean implements SpendingService {
 
     @Override
     public BigDecimal allSpendingByDate(OperationCategory category, Date dateStart, Date dateEnd) {
-        OperationType reduce = OperationType.REDUCE;
+        //Сделал вашим примером, не работал корректно
+        // Оставил как есть
         List<Operation> operationList = dataManager.load(Operation.class)
                 .query("select e from operation_Operation e where " +
                         "(e.data between :dateStart and :dateEnd) " +
                         "and e.type = :reduce " +
                         "and e.category = :category")
-                .parameter("reduce",reduce)
-                .parameter("category",category)
+                .parameter("reduce", OperationType.REDUCE)
+                .parameter("category", category)
                 .parameter("dateStart", dateStart)
                 .parameter("dateEnd", dateEnd)
                 .list();
