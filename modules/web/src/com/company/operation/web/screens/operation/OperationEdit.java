@@ -81,12 +81,11 @@ public class OperationEdit extends StandardEditor<Operation> {
                 && categoryField.getValue() != null
                 && !entityStates.isNew(getEditedEntity())) {
 
-            View view = new View(Account.class);
             dataManager.commit(
                     accountApproveService.accountApprove(
-                            dataManager.load(Account.class)//view
+                            dataManager.load(Account.class)
                                     .id(Objects.requireNonNull(accountField.getValue()).getId())
-                                    .view(view)
+                                    .view(View.LOCAL)
                                     .one(),
                             amountField.getValue(),
                             typeField.getValue()));
